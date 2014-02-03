@@ -308,6 +308,12 @@ bin_PROGRAMS += \
 	src/processor/minidump_stackwalk
 endif !DISABLE_PROCESSOR
 
+if !DISABLE_TOOLS
+bin_PROGRAMS += \
+	src/tools/common/symupload/minidump_upload \
+	src/tools/common/symupload/sym_upload
+endif
+
 if LINUX_HOST
 bin_PROGRAMS += \
 	src/client/linux/linux_dumper_unittest_helper
@@ -317,9 +323,8 @@ bin_PROGRAMS += \
 	src/tools/linux/core2md/core2md \
 	src/tools/linux/dump_syms/dump_syms \
 	src/tools/linux/md2core/minidump-2-core \
-	src/tools/linux/symupload/minidump_upload \
-	src/tools/linux/symupload/sym_upload \
 	src/tools/mac/dump_syms/dump_syms
+
 endif
 endif LINUX_HOST
 
@@ -399,6 +404,16 @@ else
 # The default Autotools test driver script.
 LOG_DRIVER = $(top_srcdir)/autotools/test-driver
 endif
+
+src_tools_common_symupload_minidump_upload_SOURCES = \
+	src/common/http_upload.cc \
+	src/tools/common/symupload/minidump_upload.cc
+src_tools_common_symupload_minidump_upload_LDADD = -lcurl
+
+src_tools_common_symupload_sym_upload_SOURCES = \
+	src/common/http_upload.cc \
+	src/tools/common/symupload/sym_upload.cc
+src_tools_common_symupload_sym_upload_LDADD = -lcurl
 
 if LINUX_HOST
 src_client_linux_linux_dumper_unittest_helper_SOURCES = \
@@ -539,15 +554,6 @@ src_tools_linux_md2core_minidump_2_core_SOURCES = \
 	src/common/linux/memory_mapped_file.cc \
 	src/tools/linux/md2core/minidump-2-core.cc
 
-src_tools_linux_symupload_minidump_upload_SOURCES = \
-	src/common/linux/http_upload.cc \
-	src/tools/linux/symupload/minidump_upload.cc
-src_tools_linux_symupload_minidump_upload_LDADD = -ldl
-
-src_tools_linux_symupload_sym_upload_SOURCES = \
-	src/common/linux/http_upload.cc \
-	src/tools/linux/symupload/sym_upload.cc
-src_tools_linux_symupload_sym_upload_LDADD = -ldl
 
 src_tools_mac_dump_syms_dump_syms_SOURCES = \
 	src/common/dwarf_cfi_to_module.cc \
