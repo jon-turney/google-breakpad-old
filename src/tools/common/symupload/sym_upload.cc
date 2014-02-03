@@ -49,7 +49,7 @@
 #include <string>
 #include <vector>
 
-#include "common/linux/http_upload.h"
+#include "common/http_upload.h"
 #include "common/using_std_string.h"
 
 using google_breakpad::HTTPUpload;
