@@ -45,7 +45,9 @@
 #include "processor/logging.h"
 #include "processor/pathname_stripper.h"
 
-#ifdef _WIN32
+#ifdef __MINGW32__
+#include <pthread.h>
+#elif defined(_WIN32)
 #define snprintf _snprintf
 #endif
 
@@ -57,7 +59,7 @@ LogStream::LogStream(std::ostream &stream, Severity severity,
   time_t clock;
   time(&clock);
   struct tm tm_struct;
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
   localtime_s(&tm_struct, &clock);
 #else
   localtime_r(&clock, &tm_struct);

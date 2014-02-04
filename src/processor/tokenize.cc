@@ -37,7 +37,11 @@
 namespace google_breakpad {
 
 #ifdef _WIN32
+#ifdef __MINGW32__
+#include <pthread.h>
+#else
 #define strtok_r strtok_s
+#endif
 #endif
 
 using std::vector;

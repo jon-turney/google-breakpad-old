@@ -47,6 +47,9 @@
 #define PRIx64 "llx"
 #define PRIx32 "lx"
 #define snprintf _snprintf
+#ifdef __MINGW32__
+#include <pthread.h>
+#endif
 #else  // _WIN32
 #include <unistd.h>
 #define O_BINARY 0
@@ -4687,7 +4690,7 @@ void Minidump::Print() {
   printf("  stream_directory_rva = 0x%x\n",    header_.stream_directory_rva);
   printf("  checksum             = 0x%x\n",    header_.checksum);
   struct tm timestruct;
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
   gmtime_s(&timestruct, reinterpret_cast<time_t*>(&header_.time_date_stamp));
 #else
   gmtime_r(reinterpret_cast<time_t*>(&header_.time_date_stamp), &timestruct);

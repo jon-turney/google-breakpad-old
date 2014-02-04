@@ -43,7 +43,9 @@
 
 namespace google_breakpad {
 
-#ifdef _WIN32
+#ifdef __MINGW32__
+#include <pthread.h>
+#elif defined(_WIN32)
 #define strtok_r strtok_s
 #endif
 
