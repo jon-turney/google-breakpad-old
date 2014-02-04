@@ -80,7 +80,12 @@ case $host in
   *-*-linux* | *-android* )
     LINUX_HOST=true
     ;;
+  *-*-cygwin* )
+    CYGWIN_HOST=true
+    ;;
 esac
+
+AM_CONDITIONAL(CYGWIN_HOST, test x$CYGWIN_HOST = xtrue)
 AM_CONDITIONAL(LINUX_HOST, test x$LINUX_HOST = xtrue)
 
 # Only use Android support headers when compiling for Android
