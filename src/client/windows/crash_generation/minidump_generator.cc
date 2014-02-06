@@ -174,12 +174,9 @@ bool HandleTraceData::CollectHandleData(
   stream_data->SizeOfEntry = sizeof(AVRF_HANDLE_OPERATION);
   stream_data->NumberOfEntries = static_cast<ULONG32>(operations_.size());
   stream_data->Reserved = 0;
-  std::copy(operations_.begin(),
-            operations_.end(),
-            stdext::checked_array_iterator<AVRF_HANDLE_OPERATION*>(
-                reinterpret_cast<AVRF_HANDLE_OPERATION*>(stream_data + 1),
-                operations_.size()));
-
+  AVRF_HANDLE_OPERATION* data_iter = reinterpret_cast<AVRF_HANDLE_OPERATION*>(stream_data + 1);
+  for (i = operations_.begin(); i != i_end; i++)
+    *data_iter++ = *i;
   return true;
 }
 
