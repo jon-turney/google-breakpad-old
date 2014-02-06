@@ -1,0 +1,10 @@
+#!/bin/sh
+# a very hacky way to inject a build-id into a pe image for testing purposes
+
+dd if=/dev/zero of=/tmp/empty.section count=1 2>/dev/null
+objcopy $1 $1.blank --add-section ".buildid"=/tmp/empty.section --set-section-flags ".buildid"=readonly,code,debug || exit
+python `dirname $0`/pe-add-debugid.py $1.blank $1.buildid || exit
+chmod +x $1.buildid
+mv $1 $1.bak
+mv $1.buildid $1
+rm /tmp/empty.section $1.blank
