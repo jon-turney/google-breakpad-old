@@ -41,6 +41,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <libgen.h>
 
 #ifdef _WIN32
 #include <io.h>
@@ -52,7 +53,6 @@
 #endif
 #else  // _WIN32
 #include <unistd.h>
-#define O_BINARY 0
 #endif  // _WIN32
 
 #include <fstream>
@@ -2443,6 +2443,16 @@ string MinidumpModule::debug_file() const {
         }
       }
     }
+  }
+
+  // Manufacture debug-file from code-file
+  if (file.empty()) {
+    char *c_filename = strdup(code_file().c_str());
+    char *base = basename(c_filename);
+    file = base;
+    free(c_filename);
+
+    BPLOG(INFO) << "Generated debug_file '" << file << "' from code_file '" << *name_ << "'";
   }
 
   // Relatively common case
