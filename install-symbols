@@ -1,0 +1,42 @@
+#!/bin/sh
+SYMBOLROOT=/tmp/symbols
+
+extension=${1##*.}
+if [ $extension != "sym" ]
+then
+  # not a .sym file so use dump_syms to create .sym file
+  ./build/src/tools/windows/dump_syms_dwarf/dump_syms.exe $1 >temp.sym
+
+  # extract buildid and filename from .sym file
+  FILE=`head -1 temp.sym | cut -f5 -d' '`
+  BUILDID=`head -1 temp.sym | cut -f4 -d' '`
+
+  # if we are converting a .dbg file, strip .dbg extension
+  if [ $extension == "dbg" ]
+  then
+    FILE=${FILE%.dbg}
+  fi
+
+  SYMFILE=${FILE}.sym
+
+else
+  # it's already a .sym file
+  # d2u it in case it came from symsrv_convert.exe
+  cp $1 temp.sym
+  d2u temp.sym
+
+  # extract buildid and filename from .sym file
+  FILE=`head -1 temp.sym | cut -f5 -d' '`
+  BUILDID=`head -1 temp.sym | cut -f4 -d' '`
+
+  # replace .pdb extension with .sym
+  SYMFILE=${FILE%.pdb}.sym
+fi
+
+# ensure the needed directory exists
+SYMBOLPATH=$SYMBOLROOT/$FILE/$BUILDID
+mkdir -p $SYMBOLPATH
+
+# install, with .sym extension
+echo $1 to $FILE/$BUILDID/$SYMFILE
+mv temp.sym $SYMBOLPATH/$SYMFILE
