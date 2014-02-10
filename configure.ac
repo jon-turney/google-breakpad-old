@@ -102,6 +102,13 @@ case $host in
 esac
 AM_CONDITIONAL(ANDROID_HOST, test x$ANDROID_HOST = xtrue)
 
+AC_ARG_WITH(pkgconfigdir,
+	AC_HELP_STRING([--with-pkgconfigdir],
+	[Use the specified pkgconfig dir (default is libdir/pkgconfig)]),
+	[pkgconfigdir=${withval}],
+	[pkgconfigdir='${libdir}/pkgconfig'])
+AC_SUBST([pkgconfigdir])
+
 AC_ARG_ENABLE(processor,
               AS_HELP_STRING([--disable-processor],
                              [Don't build processor library]
@@ -161,5 +168,5 @@ AC_ARG_ENABLE(selftest,
               [selftest=false])
 AM_CONDITIONAL(SELFTEST, test x$selftest = xtrue)
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile breakpad.pc breakpad-client.pc])
 AC_OUTPUT
