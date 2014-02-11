@@ -242,8 +242,10 @@ TEST_F(ExceptionHandlerDeathTest, InvalidParameterTest) {
   ExceptionHandler handler(temp_path_, NULL, NULL, NULL,
                            ExceptionHandler::HANDLER_INVALID_PARAMETER);
 
+#ifdef _MSC_VER
   // Disable the message box for assertions
   _CrtSetReportMode(_CRT_ASSERT, 0);
+#endif
 
   // Call with a bad argument. The invalid parameter will be swallowed
   // and a dump will be generated, the process will exit(0).
@@ -255,7 +257,7 @@ struct PureVirtualCallBase {
   PureVirtualCallBase() {
     // We have to reinterpret so the linker doesn't get confused because the
     // method isn't defined.
-    reinterpret_cast<PureVirtualCallBase*>(this)->PureFunction();
+    reinterpret_cast<PureVirtualCallBase*>(0)->PureFunction();
   }
   virtual ~PureVirtualCallBase() {}
   virtual void PureFunction() const = 0;
@@ -276,8 +278,10 @@ TEST_F(ExceptionHandlerDeathTest, PureVirtualCallTest) {
   ExceptionHandler handler(temp_path_, NULL, NULL, NULL,
                            ExceptionHandler::HANDLER_PURECALL);
 
+#ifdef _MSC_VER
   // Disable the message box for assertions
   _CrtSetReportMode(_CRT_ASSERT, 0);
+#endif
 
   // Calls a pure virtual function.
   EXPECT_EXIT(DoCrashPureVirtualCall(), ::testing::ExitedWithCode(0), "");
