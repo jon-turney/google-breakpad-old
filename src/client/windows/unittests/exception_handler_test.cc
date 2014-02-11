@@ -180,8 +180,10 @@ void ExceptionHandlerTest::DoCrashInvalidParameter() {
           google_breakpad::ExceptionHandler::HANDLER_INVALID_PARAMETER,
           kFullDumpType, kPipeName, NULL);
 
+#ifdef _MSC_VER
   // Disable the message box for assertions
   _CrtSetReportMode(_CRT_ASSERT, 0);
+#endif
 
   // Although this is executing in the child process of the death test,
   // if it's not true we'll still get an error rather than the crash
@@ -195,7 +197,7 @@ struct PureVirtualCallBase {
   PureVirtualCallBase() {
     // We have to reinterpret so the linker doesn't get confused because the
     // method isn't defined.
-    reinterpret_cast<PureVirtualCallBase*>(this)->PureFunction();
+    reinterpret_cast<PureVirtualCallBase*>(0)->PureFunction();
   }
   virtual ~PureVirtualCallBase() {}
   virtual void PureFunction() const = 0;
@@ -212,8 +214,10 @@ void ExceptionHandlerTest::DoCrashPureVirtualCall() {
           google_breakpad::ExceptionHandler::HANDLER_PURECALL,
           kFullDumpType, kPipeName, NULL);
 
+#ifdef _MSC_VER
   // Disable the message box for assertions
   _CrtSetReportMode(_CRT_ASSERT, 0);
+#endif
 
   // Although this is executing in the child process of the death test,
   // if it's not true we'll still get an error rather than the crash
