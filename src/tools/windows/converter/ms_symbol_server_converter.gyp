@@ -1,4 +1,4 @@
-# Copyright 2013 Google Inc. All rights reserved.
+# Copyright 2014 Google Inc. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -28,60 +28,34 @@
 
 {
   'includes': [
-    '../../client/windows/build/common.gypi',
+    '../../../client/windows/build/common.gypi',
   ],
   'targets': [
     {
-      'target_name': 'dia_sdk',
-      'type': 'none',
-      'all_dependent_settings': {
-        'include_dirs': [
-          '<(DEPTH)',
-          '"$(VSInstallDir)\DIA SDK\include"',
-        ],
-        'msvs_settings': {
-          'VCLinkerTool': {
-            'AdditionalDependencies': [
-              '$(VSInstallDir)\DIA SDK\lib\diaguids.lib',
-              'imagehlp.lib',
-            ],
-          },
-        },
-      },
-    },
-    {
-      'target_name': 'common_windows_lib',
+      'target_name': 'ms_symbol_server_converter',
       'type': 'static_library',
       'sources': [
-        'dia_util.cc',
-        'dia_util.h',
-        'guid_string.cc',
-        'guid_string.h',
-        'http_upload.cc',
-        'http_upload.h',
-        'omap.cc',
-        'omap.h',
-        'omap_internal.h',
-        'pdb_source_line_writer.cc',
-        'pdb_source_line_writer.h',
-        'string_utils.cc',
-        'string_utils-inl.h',
+        'ms_symbol_server_converter.cc',
+      ],
+      'include_dirs': [
+        '<(DEPTH)',
       ],
       'dependencies': [
-        'dia_sdk',
+        '<(DEPTH)/common/windows/common_windows.gyp:common_windows_lib',
       ],
     },
     {
-      'target_name': 'common_windows_unittests',
+      'target_name': 'symsrv_convert',
       'type': 'executable',
-      'sources': [
-        'omap_unittest.cc',
-      ],
       'dependencies': [
-        '<(DEPTH)/client/windows/unittests/testing.gyp:gmock',
-        '<(DEPTH)/client/windows/unittests/testing.gyp:gtest',
-        'common_windows_lib',
+        'ms_symbol_server_converter'
       ],
-    },
+      'sources' : [
+        'symsrv_convert.cc',
+      ],
+      'include_dirs': [
+        '<(DEPTH)',
+      ],
+    }
   ],
 }
