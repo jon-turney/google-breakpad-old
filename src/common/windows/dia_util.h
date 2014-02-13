@@ -28,7 +28,7 @@
 
 // Utilities for loading debug streams and tables from a PDB file.
 
-#include <Windows.h>
+#include <windows.h>
 #include <dia2.h>
 
 namespace google_breakpad {
