@@ -95,6 +95,7 @@ Makefile
 Makefile.in
 aclocal.m4
 autom4te.cache
+autotools/ar-lib
 autotools/compile
 autotools/config.guess
 autotools/config.sub
