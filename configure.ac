@@ -41,12 +41,14 @@ AM_INIT_AUTOMAKE(subdir-objects tar-ustar 1.11.1)
 AM_CONFIG_HEADER(src/config.h)
 AM_MAINTAINER_MODE
 
+AM_PROG_AR
 AM_PROG_AS
 AC_PROG_CC
 AM_PROG_CC_C_O
 AC_PROG_CPP
 AC_PROG_CXX
 AC_PROG_RANLIB
+AC_CHECK_TOOL(WINDRES, [windres])
 AM_CONDITIONAL(GCC, test "$GCC" = yes)   # let the Makefile know if we're gcc
 
 dnl This must come before all the feature tests below.
