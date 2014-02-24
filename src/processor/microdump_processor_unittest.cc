@@ -160,7 +160,7 @@ TEST_F(MicrodumpProcessorTest, TestProcessArm) {
   ASSERT_EQ(6U, state.modules()->module_count());
   ASSERT_EQ("armv7l", state.system_info()->cpu);
   ASSERT_EQ("OS VERSION INFO", state.system_info()->os_version);
-  ASSERT_EQ(8U, state.threads()->at(0)->frames()->size());
+  ASSERT_EQ(9U, state.threads()->at(0)->frames()->size());
   ASSERT_EQ("MicrodumpWriterTest_Setup_Test::TestBody",
             state.threads()->at(0)->frames()->at(0)->function_name);
   ASSERT_EQ("testing::Test::Run",

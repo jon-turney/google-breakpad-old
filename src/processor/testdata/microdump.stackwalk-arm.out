@@ -32,6 +32,9 @@ Thread 0 (crashed)
  7  libc.so + 0x11e9d
  
     Found by: call frame info
+ 8  breakpad_unittests!std::basic_istream<char, std::char_traits<char> >::~basic_istream [_istream.h : 90 + 0xc]
+ 
+    Found by: stack scanning
 
 Loaded modules:
 0xaaacd000 - 0xaab48fff  breakpad_unittests  ???
