@@ -320,16 +320,6 @@ bin_PROGRAMS += \
 endif
 endif
 
-if MINGW_HOST
-# For MinGW, use gyp to generate a Makefile to build Windows upload tools and
-# client library
-
-all-local:
-	cd $(top_srcdir)/src ; gyp --no-circular-check --depth=. -f make client/windows/breakpad_client.gyp tools/windows/dump_syms/dump_syms.gyp  tools/windows/symupload/symupload.gyp tools/windows/converter/ms_symbol_server_converter.gyp
-	cd $(top_srcdir)/src ; $(MAKE) CXX="$(CXX)" CXXFLAGS="-DUNICODE -D_UNICODE $(CXXFLAGS)"
-
-endif
-
 ## Tests
 if !DISABLE_PROCESSOR
 check_PROGRAMS += \
