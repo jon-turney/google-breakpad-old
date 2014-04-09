@@ -49,18 +49,20 @@
 
 #include "processor/tokenize.h"
 
+#ifndef HAVE_STRTOK_R
+extern "C" char *strtok_r(char *, const char *, char **);
+#endif
+
+#ifdef _MSC_VER
+#define strtok_r strtok_s
+#define strtoull _strtoui64
+#endif
+
 using std::map;
 using std::vector;
 using std::make_pair;
 
 namespace google_breakpad {
-
-#ifdef __MINGW32__
-#include <pthread.h>
-#elif defined(_WIN32)
-#define strtok_r strtok_s
-#define strtoull _strtoui64
-#endif
 
 static const char *kWhitespace = " \r\n";
 static const int kMaxErrorsPrinted = 5;

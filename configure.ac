@@ -75,6 +75,9 @@ m4_include(m4/ax_pthread.m4)
 AX_PTHREAD
 AC_CHECK_HEADERS([a.out.h])
 
+AC_CONFIG_LIBOBJ_DIR([compat])
+AC_REPLACE_FUNCS([strtok_r])
+
 # Only build Linux client libs when compiling for Linux
 case $host in
   *-*-linux* | *-android* )

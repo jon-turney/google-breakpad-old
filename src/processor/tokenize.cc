@@ -34,15 +34,15 @@
 
 #include "common/using_std_string.h"
 
-namespace google_breakpad {
+#ifndef HAVE_STRTOK_R
+extern "C" char *strtok_r(char *, const char *, char **);
+#endif
 
-#ifdef _WIN32
-#ifdef __MINGW32__
-#include <pthread.h>
-#else
+#ifdef _MSC_VER
 #define strtok_r strtok_s
 #endif
-#endif
+
+namespace google_breakpad {
 
 using std::vector;
 
