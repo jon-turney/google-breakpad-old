@@ -362,6 +362,13 @@ bool HTTPUpload::GetFileContents(const wstring &filename,
       rv = true;
     }
   }
+
+#ifdef _MSC_VER
+  file.close();
+#else
+  fclose(f);
+#endif
+
   return rv;
 }
 
