@@ -66,6 +66,11 @@ if WINDOWS_HOST
 AM_CPPFLAGS += -DNO_STABS_SUPPORT
 endif
 
+if MINGW_HOST
+SOCKET_LIBS = -lws2_32
+AM_CPPFLAGS += -D_POSIX
+endif
+
 # Specify include paths for ac macros
 ACLOCAL_AMFLAGS = -I m4
 
@@ -311,10 +316,12 @@ bin_PROGRAMS += \
 	src/processor/minidump_stackwalk
 endif !DISABLE_PROCESSOR
 
+if !MINGW_HOST
 if !DISABLE_TOOLS
 bin_PROGRAMS += \
 	src/tools/common/symupload/minidump_upload \
 	src/tools/common/symupload/sym_upload
+endif
 endif
 
 if LINUX_HOST
@@ -330,9 +337,11 @@ endif
 endif LINUX_HOST
 
 if WINDOWS_HOST
+if !MINGW_HOST
 if !DISABLE_TOOLS
 bin_PROGRAMS += \
 	src/tools/windows/dump_syms_dwarf/dump_syms
+endif
 endif
 endif
 
@@ -634,6 +643,7 @@ src_tools_linux_md2core_minidump_2_core_unittest_LDADD = \
 endif LINUX_HOST
 
 if WINDOWS_HOST
+if !MINGW_HOST
 if !DISABLE_TOOLS
 src_tools_windows_dump_syms_dwarf_dump_syms_SOURCES = \
 	src/common/dwarf_cfi_to_module.cc \
@@ -648,6 +658,7 @@ src_tools_windows_dump_syms_dwarf_dump_syms_SOURCES = \
 	src/common/pecoff/pecoffutils.cc \
 	src/common/pecoff/pecoff_file_id.cc \
 	src/tools/windows/dump_syms_dwarf/dump_syms.cc
+endif
 endif
 endif
 
@@ -1164,7 +1175,8 @@ src_processor_minidump_dump_LDADD = \
 	src/processor/dump_object.o \
 	src/processor/logging.o \
 	src/processor/minidump.o \
-	src/processor/pathname_stripper.o
+	src/processor/pathname_stripper.o \
+	$(PTHREAD_CFLAGS) $(PTHREAD_LIBS)
 
 src_processor_microdump_stackwalk_SOURCES = \
 	src/processor/microdump_stackwalk.cc
@@ -1198,7 +1210,8 @@ src_processor_microdump_stackwalk_LDADD = \
 	src/processor/stackwalker_sparc.o \
 	src/processor/stackwalker_x86.o \
 	src/processor/tokenize.o \
-	src/third_party/libdisasm/libdisasm.a
+	src/third_party/libdisasm/libdisasm.a \
+	$(PTHREAD_CFLAGS) $(PTHREAD_LIBS) $(SOCKET_LIBS)
 
 src_processor_minidump_stackwalk_SOURCES = \
 	src/processor/minidump_stackwalk.cc
@@ -1235,7 +1248,8 @@ src_processor_minidump_stackwalk_LDADD = \
 	src/processor/stackwalker_sparc.o \
 	src/processor/stackwalker_x86.o \
 	src/processor/tokenize.o \
-	src/third_party/libdisasm/libdisasm.a
+	src/third_party/libdisasm/libdisasm.a \
+	$(PTHREAD_CFLAGS) $(PTHREAD_LIBS) $(SOCKET_LIBS)
 
 endif !DISABLE_PROCESSOR
 
