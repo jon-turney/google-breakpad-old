@@ -55,7 +55,7 @@ using std::make_pair;
 
 namespace google_breakpad {
 
-#ifdef _WIN32
+#ifdef _MSC_VER
 #define strtok_r strtok_s
 #define strtoull _strtoui64
 #endif
