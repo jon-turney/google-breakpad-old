@@ -5,10 +5,9 @@ information, as used by Cygwin/MinGW
 
 ## Compiling
 
-See README
+Use ./configure && make (See README)
 
-Will produce dump\_syms, minidump\_dump, minidump\_stackwalk, libbreakpad.a
-
+which will produce dump\_syms, minidump\_dump, minidump\_stackwalk, libbreakpad.a
 and for MinGW libcrash\_generation_client.a, libcrash\_generation_server.a, crash\_generation_app.exe
 
 Note that since git-svn ignores svn externals, this repository is missing the
@@ -41,7 +40,7 @@ crash\_generation\_app.exe is built.
 ### Processing the minidump to produce a stack trace
 
 ````
-minidump_stackwalk blah.dmp /symbols
+minidump_stackwalk blah.dmp /symbols/
 ````
 
 ## Issues
@@ -66,9 +65,10 @@ practice this turns out to be quite tricky...
 
 ### Symbols from a PDB or the Microsoft Symbol Server
 
-symsrv_convert and dump_syms cannot be currently built with MinGW, because they
-require the MS DIA (Debug Interface Access) SDK (which is only in paid editions
-of Visual Studio) and the DIA SDK uses ATL.
+<a href="http://hg.mozilla.org/users/tmielczarek_mozilla.com/fetch-win32-symbols">
+symsrv_convert</a> and dump_syms for PDB cannot be currently built with MinGW,
+because they require the MS DIA (Debug Interface Access) SDK (which is only in
+paid editions of Visual Studio) and the DIA SDK uses ATL.
 
 An alternate PDB parser is available at https://github.com/luser/dump_syms, but
 that also needs some work before it can be built with MinGW.
