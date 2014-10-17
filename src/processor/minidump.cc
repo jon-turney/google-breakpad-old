@@ -1964,12 +1964,16 @@ string MinidumpModule::debug_file() const {
 
   // Manufacture debug-file from code-file
   if (file.empty()) {
-    char *c_filename = strdup(code_file().c_str());
-    char *base = basename(c_filename);
-    file = base;
-    free(c_filename);
+    file = code_file();
 
     BPLOG(INFO) << "Generated debug_file '" << file << "' from code_file '" << *name_ << "'";
+  }
+
+  // This may be a windows-style pathname, so find the basename considering both
+  // forward and back-slashes.
+  const size_t last_slash_idx = file.find_last_of("\\/");
+  if (std::string::npos != last_slash_idx) {
+    file.erase(0, last_slash_idx + 1);
   }
 
   // Relatively common case
