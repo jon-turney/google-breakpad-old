@@ -35,6 +35,7 @@
 #include <fstream>
 #ifndef _MSC_VER
 #include <ext/stdio_filebuf.h>
+#include <fcntl.h>
 #endif
 
 #include "common/windows/string_utils-inl.h"
@@ -340,9 +341,10 @@ bool HTTPUpload::GetFileContents(const wstring &filename,
   ifstream file(_wfopen(filename.c_str(), L"rb"));
   if (!file.is_open()) return false;
 #else
-  FILE *f = _wfopen(filename.c_str(), L"rb");
-  if (!f) return false;
-  __gnu_cxx::stdio_filebuf<char> filebuf(f, std::ios::in);
+  int fd = _wopen(filename.c_str(), _O_BINARY | _O_RDONLY);
+  if (fd == -1) return false;
+  __gnu_cxx::stdio_filebuf<char> filebuf(fd, std::ios::in);
+  //if (!filebuf.is_open() return false;
   std::istream file(&filebuf);
 #endif
 
@@ -366,7 +368,7 @@ bool HTTPUpload::GetFileContents(const wstring &filename,
 #ifdef _MSC_VER
   file.close();
 #else
-  fclose(f);
+  close(fd);
 #endif
 
   return rv;
