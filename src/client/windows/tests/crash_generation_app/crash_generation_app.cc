@@ -254,7 +254,7 @@ static void _cdecl ShowClientCrashed(void* context,
   line[0] = _T('\0');
   result = swprintf_s(line,
                       kMaximumLineLength,
-                      L"%s\n",
+                      L"%s\r\n",
                       str_line.c_str());
   if (result == -1) {
     delete[] line;
