@@ -85,14 +85,17 @@ static bool IsClientRequestValid(const ProtocolMessage& msg) {
           msg.assert_info != NULL);
 }
 
-#ifdef _DEBUG
 static bool CheckForIOIncomplete(bool success) {
+#ifdef _DEBUG
   // We should never get an I/O incomplete since we should not execute this
   // unless the operation has finished and the overlapped event is signaled. If
   // we do get INCOMPLETE, we have a bug in our code.
   return success ? false : (GetLastError() == ERROR_IO_INCOMPLETE);
-}
+#else
+  return true;
 #endif
+}
+
 
 CrashGenerationServer::CrashGenerationServer(
     const std::wstring& pipe_name,
