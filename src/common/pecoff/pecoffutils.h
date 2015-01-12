@@ -155,7 +155,7 @@ class PeCoffObjectFileReader {
   static const PeSectionHeader* GetSectionTable(ObjectFileBase obj_base);
   static const char* GetStringTable(ObjectFileBase obj_base);
   static const PeDataDirectory* GetDataDirectoryEntry(ObjectFileBase obj_base,
-                                                      int entry);
+                                                      unsigned int entry);
   static const uint8_t* ConvertRVAToPointer(ObjectFileBase obj_base, Offset rva);
 };
 

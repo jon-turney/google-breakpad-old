@@ -312,7 +312,7 @@ PeCoffObjectFileReader<PeCoffClassTraits>::FileIdentifierFromMappedFile(
   // dashes removed.
   char identifier_str[40];
   int buffer_idx = 0;
-  for (int idx = 0; idx < kMDGUIDSize; ++idx) {
+  for (unsigned int idx = 0; idx < kMDGUIDSize; ++idx) {
     int hi = (identifier_swapped[idx] >> 4) & 0x0F;
     int lo = (identifier_swapped[idx]) & 0x0F;
 
@@ -355,7 +355,7 @@ bool PeCoffObjectFileReader<PeCoffClassTraits>::GetBuildID(
   }
 
   // search the debug directory for a codeview entry
-  for (int i = 0; i < debug_directory_size/sizeof(PeDebugDirectory); i++) {
+  for (unsigned int i = 0; i < debug_directory_size/sizeof(PeDebugDirectory); i++) {
     if (debug_directory[i].mType == IMAGE_DEBUG_TYPE_CODEVIEW) {
       // interpret the codeview record to get build-id
       const CvInfoPbd70* codeview_record = reinterpret_cast<const CvInfoPbd70*>
@@ -446,7 +446,7 @@ const char* PeCoffObjectFileReader<PeCoffClassTraits>::GetStringTable(
 template<class PeCoffClassTraits>
 const PeDataDirectory*
 PeCoffObjectFileReader<PeCoffClassTraits>::GetDataDirectoryEntry(
-    ObjectFileBase obj_base, int entry) {
+    ObjectFileBase obj_base, unsigned int entry) {
   const PeOptionalHeader* peOptionalHeader = GetOptionalHeader(obj_base);
 
   // the data directory immediately follows the optional header
