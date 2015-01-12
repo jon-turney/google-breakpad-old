@@ -7,6 +7,16 @@ information, as used by Cygwin/MinGW
 
 See README
 
+### Preparation
+
+Run autoreconf to generate ./configure
+
+````
+autoreconf -fvi
+````
+
+### Compiling
+
 ````
 ./configure && make
 ````
