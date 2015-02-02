@@ -214,6 +214,10 @@ StackFrame* StackwalkerAMD64::GetCallerFrame(const CallStack* stack,
   if (cfi_frame_info.get())
     new_frame.reset(GetCallerByCFIFrameInfo(frames, cfi_frame_info.get()));
 
+  // Ignore CFI which gave RIP of 0
+  if (new_frame.get() && new_frame->context.rip == 0)
+    new_frame.release();
+
   // If CFI failed, or there wasn't CFI available, fall back
   // to stack scanning.
   if (stack_scan_allowed && !new_frame.get()) {
