@@ -7,6 +7,13 @@ information, as used by Cygwin/MinGW
 
 ### Preparation
 
+Run the fetch-externals script to fetch submodules in the DEPS file (e.g the gyp and gtest dependencies).
+(The upsteam repository is meant to be checked out using Chromium's depot_tools, which does that)
+
+```
+./fetch-externals
+```
+
 Run autoreconf to generate ./configure
 
 ````
@@ -23,9 +30,6 @@ See README
 
 will produce dump\_syms, minidump\_dump, minidump\_stackwalk, libbreakpad.a
 and for MinGW libcrash\_generation_client.a, libcrash\_generation_server.a, crash\_generation_app.exe
-
-Note that since git-svn ignores svn externals, this repository is missing the
-gyp and gtest dependencies.
 
 ## Using
 
