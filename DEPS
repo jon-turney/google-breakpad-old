@@ -43,7 +43,7 @@ deps = {
 
   # Protobuf.
   "src/src/third_party/protobuf/protobuf":
-    "http://protobuf.googlecode.com/svn/trunk@407",
+    "http://protobuf.googlecode.com/svn/trunk@402",
 
   # GYP project generator.
   "src/src/tools/gyp": "http://gyp.googlecode.com/svn/trunk@1886",
