@@ -1,5 +1,7 @@
 # Breakpad for Cygwin/MinGW
 
+[![Build status](https://ci.appveyor.com/api/projects/status/7ipva2m4gq5lr4k0/branch/pecoff-dwarf-on-svn-rev-1418?svg=true)](https://ci.appveyor.com/project/jon-turney/google-breakpad)
+
 google-breakpad with support added for PE/COFF executables with DWARF debugging
 information, as used by Cygwin/MinGW
 
