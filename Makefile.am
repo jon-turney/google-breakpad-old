@@ -349,7 +349,7 @@ endif
 if MINGW_HOST
 # For MinGW, use gyp to generate a Makefile to build Windows client library
 all-local:
-	cd $(top_srcdir)/src ; ./tools/gyp/gyp --no-circular-check --depth=. -f make client/windows/breakpad_client.gyp
+	cd $(top_srcdir)/src ; ./tools/gyp/gyp --no-circular-check --no-parallel --depth=. -f make client/windows/breakpad_client.gyp
 	cd $(top_srcdir)/src ; $(MAKE) CXX="$(CXX)" CXXFLAGS="-DUNICODE -D_UNICODE $(AM_CPPFLAGS) $(CXXFLAGS)" AR="$(AR)" RC="$(WINDRES)"
 endif
 
