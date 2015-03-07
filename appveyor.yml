@@ -1,0 +1,32 @@
+version: '{build}'
+skip_tags: true
+environment:
+  CYGWIN_ROOT: C:\cygwin
+  CYGWIN_MIRROR: http://cygwin.mirror.constant.com
+  CYGWIN_PORTS_MIRROR: http://mirrors.kernel.org/sourceware/cygwinports
+  CYGwIN_PORTS_KEY: http://cygwinports.org/ports.gpg
+  CACHE: C:\cache
+  matrix:
+  - HOST: i686-w64-mingw32
+  - HOST: x86_64-w64-mingw32
+install:
+- if "%HOST%"=="i686-w64-mingw32" set PKGARCH="mingw64-i686"
+- if "%HOST%"=="x86_64-w64-mingw32" set PKGARCH="mingw64-x86_64"
+- if not defined PKGARCH exit 1
+- if not exist %CACHE% mkdir %CACHE%
+- set SETUP=setup-x86.exe
+- appveyor DownloadFile https://cygwin.com/%SETUP% -FileName %CYGWIN_ROOT%\%SETUP%
+- echo Updating Cygwin
+- '%CYGWIN_ROOT%\%SETUP% -qnNdO -R "%CYGWIN_ROOT%" -s "%CYGWIN_MIRROR%" -l "%CACHE%"'
+- echo Installing build dependencies
+- '%CYGWIN_ROOT%\%SETUP% -qnNdO -R "%CYGWIN_ROOT%" -s "%CYGWIN_MIRROR%" -s "%CYGWIN_PORTS_MIRROR%" -K "%CYGWIN_PORTS_KEY%" -l "%CACHE%" -P "autoconf,automake,git-svn,libtool,make,patch,%PKGARCH%-curl,%PKGARCH%-headers,%PKGARCH%-gcc-g++,pkg-config,python"'
+- echo Install done
+cache:
+- C:\cache
+build_script:
+- SET PATH=%CYGWIN_ROOT%/bin
+- '%CYGWIN_ROOT%\bin\bash -lc "cd $APPVEYOR_BUILD_FOLDER; exec 0</dev/null; sh appveyor.sh"'
+test: off
+artifacts:
+- path: staging
+deploy: off

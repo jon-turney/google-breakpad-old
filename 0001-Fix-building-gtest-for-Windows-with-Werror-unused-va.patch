@@ -1,0 +1,29 @@
+From 6cb73a4dbe34102ad0f190cb2c0bf3f1504112d3 Mon Sep 17 00:00:00 2001
+From: Jon TURNEY <jon.turney@dronecode.org.uk>
+Date: Mon, 23 Mar 2015 00:47:42 +0000
+Subject: [PATCH] Fix building gtest for Windows with -Werror=unused-variable
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+./src/testing/gtest/src/gtest-death-test.cc:123:13: error: ‘testing::internal::g_in_fast_death_test_child’ defined but not used [-Werror=unused-variable]
+---
+ src/gtest-death-test.cc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/gtest-death-test.cc b/src/gtest-death-test.cc
+index 36a2e3a..1362cd0 100644
+--- a/src/gtest-death-test.cc
++++ b/src/gtest-death-test.cc
+@@ -120,7 +120,9 @@ namespace internal {
+
+ // Valid only for fast death tests. Indicates the code is running in the
+ // child process of a fast style death test.
++# if !GTEST_OS_WINDOWS
+ static bool g_in_fast_death_test_child = false;
++#endif
+
+ // Returns a Boolean value indicating whether the caller is currently
+ // executing in the context of the death test child process.  Tools such as
+--
+2.1.4
