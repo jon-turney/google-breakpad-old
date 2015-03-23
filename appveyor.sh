@@ -8,6 +8,7 @@ cd "$srcdir"
 
 echo fetching svn externals...
 ./fetch-svn-externals
+patch -N -d src/testing/gtest -p1 <0001-Fix-building-gtest-for-Windows-with-Werror-unused-va.patch || true
 
 echo autoreconf running...
 autoreconf -fvi
@@ -41,3 +42,10 @@ END
 EOF
 cp -a ./breakpad-client.pc ./staging/usr/lib/pkgconfig/
 cp -a $srcdir/src/out/Debug/crash_generation_app.exe ./staging/usr/bin/
+
+# takes too long to run for appveyor
+if [ ! $APPVEYOR ] ; then
+  echo make check running...
+  export PATH=/usr/${HOST}/sys-root/mingw/bin/:$PATH
+  make check
+fi
