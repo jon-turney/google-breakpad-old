@@ -1,6 +1,5 @@
 version: '{build}'
 skip_tags: true
-os: Unstable
 environment:
   CYGWIN_ROOT: C:\cygwin
   CYGWIN_MIRROR: http://cygwin.mirror.constant.com
