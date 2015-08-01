@@ -19,7 +19,7 @@ install:
 - echo Updating Cygwin
 - '%CYGWIN_ROOT%\%SETUP% -qnNdO -R "%CYGWIN_ROOT%" -s "%CYGWIN_MIRROR%" -l "%CACHE%"'
 - echo Installing build dependencies
-- '%CYGWIN_ROOT%\%SETUP% -qnNdO -R "%CYGWIN_ROOT%" -s "%CYGWIN_MIRROR%" -s "%CYGWIN_PORTS_MIRROR%" -K "%CYGWIN_PORTS_KEY%" -l "%CACHE%" -P "autoconf,automake,git-svn,libtool,make,patch,%PKGARCH%-curl,%PKGARCH%-headers,%PKGARCH%-gcc-g++,pkg-config,python"'
+- '%CYGWIN_ROOT%\%SETUP% -qnNdO -R "%CYGWIN_ROOT%" -s "%CYGWIN_MIRROR%" -s "%CYGWIN_PORTS_MIRROR%" -K "%CYGWIN_PORTS_KEY%" -l "%CACHE%" -P "autoconf,automake,git-svn,libtool,make,patch,%PKGARCH%-curl,%PKGARCH%-headers,%PKGARCH%-gcc-g++,pkg-config,python,subversion-perl"'
 - echo Install done
 cache:
 - C:\cache
