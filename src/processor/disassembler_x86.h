@@ -37,6 +37,7 @@
 #define GOOGLE_BREAKPAD_PROCESSOR_DISASSEMBLER_X86_H_
 
 #include <stddef.h>
+#include <string.h> // workaround any headers included by libdis.h being put into namespace libdis below
 #include <sys/types.h>
 
 #include "google_breakpad/common/breakpad_types.h"
