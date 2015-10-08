@@ -317,12 +317,10 @@ bin_PROGRAMS += \
 	src/processor/minidump_stackwalk
 endif !DISABLE_PROCESSOR
 
-if !MINGW_HOST
 if !DISABLE_TOOLS
 bin_PROGRAMS += \
 	src/tools/common/symupload/minidump_upload \
 	src/tools/common/symupload/sym_upload
-endif
 endif
 
 if LINUX_HOST
