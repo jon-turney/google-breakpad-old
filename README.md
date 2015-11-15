@@ -44,7 +44,7 @@ dump_syms crash_generation_app.exe >crash_generation_app.sym
 FILE=`head -1 crash_generation_app.sym | cut -f5 -d' '`
 BUILDID=`head -1 crash_generation_app.sym | cut -f4 -d' '`
 SYMBOLPATH=/symbols/${FILE}/${BUILDID}/
-mdir -p ${SYMBOLPATH}
+mkdir -p ${SYMBOLPATH}
 mv crash_generation_app.sym ${SYMBOLPATH}
 ````
 
